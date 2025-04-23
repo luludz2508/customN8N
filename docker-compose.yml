@@ -1,0 +1,33 @@
+version: "3.7"
+
+services:
+  n8n:
+    build:
+      context: .
+      tags:
+        - myn8n:latest
+    container_name: cont_n8n
+    restart: always
+    environment:
+      - NODE_FUNCTION_ALLOW_BUILTIN=*
+      - NODE_FUNCTION_ALLOW_EXTERNAL=exceljs,xlsx-populate
+      - N8N_FUNCTION_ALLOW_EXTERNAL=exceljs,xlsx-populate
+      - N8N_SECURE_COOKIE=false
+      - GENERIC_TIMEZONE=Asia/Ho_Chi_Minh
+      - WEBHOOK_URL=https://n8n.luludz.io.vn
+      - N8N_EDITOR_BASE_URL=https://n8n.luludz.io.vn
+      - VUE_APP_URL=https://n8n.luludz.io.vn
+      - N8N_HOST=n8n.luludz.io.vn
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=https
+      - N8N_PORT_WEBHOOK=5678
+      - N8N_METRICS=true
+      - N8N_BASIC_AUTH_ACTIVE=false
+    ports:
+      - "5678:5678"
+    volumes:
+      - "n8n_data:/home/node/.n8n"
+
+volumes:
+  n8n_data:
+    external: true
